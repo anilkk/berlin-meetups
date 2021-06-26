@@ -10,6 +10,7 @@ class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
+    const meetups = get(this, 'props.data.allContentfulMeetups.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
 
     return (
@@ -28,6 +29,20 @@ class RootIndex extends React.Component {
                 )
               })}
             </ul>
+          </div>
+          <div>
+            <h3>{meetups[0].node.name}</h3>
+            <ul>
+              {meetups[0].node.listOfMeetups.map(({name, url}) => (
+                <li key={name}>
+                  <h3>
+                    <a href={url.url} target="_blank">{name}</a>
+                  </h3>
+                </li>
+              ))}
+            </ul>
+            <h3> MEETUP data </h3>
+            {JSON.stringify(meetups)}
           </div>
         </div>
       </Layout>
@@ -82,5 +97,26 @@ export const pageQuery = graphql`
         }
       }
     }
+    allContentfulMeetups {
+      edges {
+        node {
+          id
+          name
+          listOfMeetups {
+            name
+            url {
+              url
+            }
+          }
+        }
+      }
+    }
   }
 `
+// allContentfulMeetups(name: "meetups") {
+//   edges {
+//     node {
+//       name
+//     }
+//   }
+// }
