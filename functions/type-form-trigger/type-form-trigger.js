@@ -21,7 +21,6 @@ exports.handler = async (event, context) => {
   const params = querystring.parse(event.body);
   console.log("EVENT --->", event);
   const [meetupName, meetupUrl] = event.body.form_response.answers;
-  console.log("EVENT body --->", event.body.form_response.answers[]);
   // const name = params.name || "World";
   
   console.log("BEFORE CREATE EVENT --->");
