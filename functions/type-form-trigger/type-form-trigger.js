@@ -8,7 +8,7 @@ var client = createClient({
 
   let newEntryId = '';
   let currentEnvironment = null;
-  const AddEntry = (name, url) => {
+  const addEntry = async (name, url) => {
     client.getSpace(CONTENTFUL_SPACE_ID).then((space) => {
         space.getEnvironment('master').then((environment) => {
             currentEnvironment = environment;
@@ -62,8 +62,10 @@ exports.handler = async (event, context) => {
   console.log("EVENT --->", event);
   console.log("EVENT body --->", event.body);
   const name = params.name || "World";
+  console.log("BEFORE CREATE EVENT --->");
+  await addEntry('Product Crunch', 'https://meetup.com/product-crunch');
+  console.log("AFTER CREATE EVENT --->");
   
-  AddEntry('Product Crunch', 'https://meetup.com/product-crunch');
   return {
     statusCode: 200,
     body: `Hello, ${name}`,
